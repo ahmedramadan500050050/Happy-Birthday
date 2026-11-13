@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حكايتنا - Happy Birthday Dodo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0b090a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 20%, rgba(180, 50, 80, 0.15), transparent 60%);
+            z-index: -1;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 450px;
+            background: rgba(25, 20, 25, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .header h1 span {
+            color: #ff5c8a;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #d0d0d0;
+            margin-bottom: 20px;
+        }
+
+        .divider {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .counter-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .counter-box {
+            background: rgba(40, 30, 38, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 15px 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.05);
+        }
+
+        .counter-box .number {
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .counter-box .label {
+            font-size: 11px;
+            color: #b0a0a5;
+        }
+
+        .music-player {
+            background: rgba(35, 25, 32, 0.8);
+            border-radius: 16px;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 15px;
+        }
+
+        .music-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: right;
+        }
+
+        .music-icon {
+            width: 35px;
+            height: 35px;
+            background: #ff5c8a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 14px;
+            box-shadow: 0 0 10px rgba(255, 92, 138, 0.4);
+        }
+
+        .music-title {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .music-subtitle {
+            font-size: 10px;
+            color: #998;
+        }
+
+        .play-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Happy Birthday Dodo <span style="color: #ff5c8a;">♥️😍</span></h1>
+            <div class="subtitle">كل لحظة معاكي هي عمر جديد</div>
+            <div class="divider">منذ أن بدأت القصة</div>
+        </div>
+
+        <div class="counter-grid">
+            <div class="counter-box">
+                <span class="number" id="days">0</span>
+                <span class="label">يوم</span>
+            </div>
+            <div class="counter-box">
+                <span class="number" id="months">0</span>
+                <span class="label">شهر</span>
+            </div>
+            <div class="counter-box">
+                <span class="number" id="years">0</span>
+                <span class="label">سنة</span>
+            </div>
+            <div class="counter-box">
+                <span class="number" id="seconds">0</span>
+                <span class="label">ثانية</span>
+            </div>
+            <div class="counter-box">
+                <span class="number" id="minutes">0</span>
+                <span class="label">دقيقة</span>
+            </div>
+            <div class="counter-box">
+                <span class="number" id="hours">0</span>
+                <span class="label">ساعة</span>
+            </div>
+        </div>
+
+        <div class="music-player">
+            <div class="music-info">
+                <div class="music-icon">♫</div>
+                <div>
+                    <div class="music-title">موسيقى الذكريات</div>
+                    <div class="music-subtitle">الأغنية اللي بتوصفنا 🤍</div>
+                </div>
+            </div>
+            <button class="play-btn" id="playToggle">▶</button>
+        </div>
+    </div>
+
+    <script>
+        const targetDate = new Date('2025-10-07T00:00:00');
+
+        function updateCounter() {
+            const now = new Date();
+            const diff = now - targetDate;
+
+            if (diff > 0) {
+                const seconds = Math.floor(diff / 1000) % 60;
+                const minutes = Math.floor(diff / (1000 * 60)) % 60;
+                const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+                const daysTotal = Math.floor(diff / (1000 * 60 * 60 * 24));
+                
+                const years = Math.floor(daysTotal / 365);
+                const months = Math.floor((daysTotal % 365) / 30);
+                const days = (daysTotal % 365) % 30;
+
+                document.getElementById('years').innerText = years;
+                document.getElementById('months').innerText = months;
+                document.getElementById('days').innerText = daysTotal;
+                document.getElementById('hours').innerText = hours;
+                document.getElementById('minutes').innerText = minutes;
+                document.getElementById('seconds').innerText = seconds;
+            }
+        }
+
+        setInterval(updateCounter, 1000);
+        updateCounter();
+
+        const playBtn = document.getElementById('playToggle');
+        let isPlaying = false;
+        playBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            playBtn.innerText = isPlaying ? '⏸' : '▶';
+        });
+    </script>
+</body>
+</html>
